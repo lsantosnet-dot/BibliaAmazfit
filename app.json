@@ -1,0 +1,76 @@
+{
+  "configVersion": "v3",
+  "app": {
+    "appId": 34098,
+    "appName": "MiniBíblia",
+    "appType": "app",
+    "version": {
+      "code": 1,
+      "name": "1.0.0"
+    },
+    "icon": "icon.png",
+    "vender": "Senior Developer",
+    "description": "Bíblia Sagrada 100% offline para Amazfit"
+  },
+  "defaultLanguage": "pt-BR",
+  "permissions": [],
+  "runtime": {
+    "apiVersion": {
+      "compatible": "3.0.0",
+      "target": "3.0.0",
+      "minVersion": "3.0.0"
+    }
+  },
+  "targets": {
+    "t-rex-3": {
+      "module": {
+        "page": {
+          "pages": [
+            "page/index",
+            "page/chapter",
+            "page/reader"
+          ]
+        }
+      },
+      "platforms": [
+        {
+          "name": "t-rex-3",
+          "deviceSource": 8716544
+        },
+        {
+          "name": "t-rex-3-alt1",
+          "deviceSource": 8716545
+        },
+        {
+          "name": "t-rex-3-alt2",
+          "deviceSource": 8716547
+        },
+        {
+          "name": "balance",
+          "deviceSource": 9568512
+        },
+        {
+          "name": "balance-alt1",
+          "deviceSource": 9568513
+        },
+        {
+          "name": "balance-alt2",
+          "deviceSource": 9568515
+        },
+        {
+          "name": "gtr-4",
+          "deviceSource": 260
+        },
+        {
+          "name": "gtr-4-alt",
+          "deviceSource": 261
+        },
+        {
+          "name": "gtr-3-pro",
+          "deviceSource": 229
+        }
+      ],
+      "designWidth": 480
+    }
+  }
+}
