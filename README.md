@@ -80,6 +80,7 @@ zeus preview
 2. Um código QR será renderizado no próprio terminal.
 3. Abra o aplicativo **Zepp** em seu celular emparelhado com o relógio.
 4. Vá em **Perfil** > **Configurações** > **Ferramentas de Desenvolvedor**.
+   > 💡 **Como habilitar as Ferramentas de Desenvolvedor:** Caso essa opção não apareça nas configurações do seu aplicativo Zepp, vá em **Perfil** > **Configurações** > **Sobre** e toque repetidamente (**7 vezes**) no **logotipo azul do Zepp**. Uma notificação avisará que o modo desenvolvedor foi ativado. Volte ao menu anterior de configurações e a opção estará lá!
 5. Toque em **Escanear Código QR** e aponte a câmera do seu celular para o código gerado no terminal. O app será transferido e abrirá instantaneamente no seu pulso!
 
 ---
