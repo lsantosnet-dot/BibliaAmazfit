@@ -1,5 +1,5 @@
 import { createWidget, widget, align, text_style } from '@zos/ui'
-import { openAssetsSync, readSync, statAssetsSync, closeSync, O_RDONLY } from '@zos/fs'
+import { openAssetsSync, readSync, statAssetsSync, closeSync, O_RDONLY, readFileSync } from '@zos/fs'
 import { px } from '@zos/utils'
 
 function bufferToString(buffer) {
@@ -54,12 +54,13 @@ function readAssetJson(path) {
   return null
 }
 
-function getTypeId(length) {
+function getTypeId(length, scale) {
   if (length === 0) return 6
-  if (length <= 60) return 1
-  if (length <= 120) return 2
-  if (length <= 200) return 3
-  if (length <= 300) return 4
+  var adjustedLength = length * scale
+  if (adjustedLength <= 60) return 1
+  if (adjustedLength <= 120) return 2
+  if (adjustedLength <= 200) return 3
+  if (adjustedLength <= 300) return 4
   return 5
 }
 
@@ -69,8 +70,25 @@ Page({
     var bookId = appData.bookId
     var bookName = appData.bookName
     var chapter = appData.chapter
+    var fontSize = 26
+    try {
+      const content = readFileSync({
+        path: 'font.txt',
+        options: {
+          encoding: 'utf8'
+        }
+      })
+      if (content) {
+        fontSize = parseInt(content, 10) || appData.fontSize || 26
+      } else {
+        fontSize = appData.fontSize || 26
+      }
+    } catch (e) {
+      fontSize = appData.fontSize || 26
+    }
+    var scale = fontSize / 26
 
-    console.log('MiniBíblia Leitor - ' + bookName + ' Cap ' + chapter + ' (ID:' + bookId + ')')
+    console.log('MiniBíblia Leitor - ' + bookName + ' Cap ' + chapter + ' (ID:' + bookId + ') Fonte:' + fontSize)
 
     createWidget(widget.TEXT, {
       x: 0,
@@ -136,32 +154,32 @@ Page({
     var item_config = [
       {
         type_id: 1,
-        item_height: px(140),
-        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(120), key: 'text', color: 0xFFFFFF, text_size: px(26), text_style: text_style.WRAP, line_space: px(6) }],
+        item_height: px(Math.round(140 * scale)),
+        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(Math.round(120 * scale)), key: 'text', color: 0xFFFFFF, text_size: px(fontSize), text_style: text_style.WRAP, line_space: px(Math.round(6 * scale)) }],
         text_view_count: 1
       },
       {
         type_id: 2,
-        item_height: px(220),
-        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(200), key: 'text', color: 0xFFFFFF, text_size: px(26), text_style: text_style.WRAP, line_space: px(6) }],
+        item_height: px(Math.round(220 * scale)),
+        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(Math.round(200 * scale)), key: 'text', color: 0xFFFFFF, text_size: px(fontSize), text_style: text_style.WRAP, line_space: px(Math.round(6 * scale)) }],
         text_view_count: 1
       },
       {
         type_id: 3,
-        item_height: px(330),
-        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(310), key: 'text', color: 0xFFFFFF, text_size: px(26), text_style: text_style.WRAP, line_space: px(6) }],
+        item_height: px(Math.round(330 * scale)),
+        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(Math.round(310 * scale)), key: 'text', color: 0xFFFFFF, text_size: px(fontSize), text_style: text_style.WRAP, line_space: px(Math.round(6 * scale)) }],
         text_view_count: 1
       },
       {
         type_id: 4,
-        item_height: px(470),
-        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(450), key: 'text', color: 0xFFFFFF, text_size: px(26), text_style: text_style.WRAP, line_space: px(6) }],
+        item_height: px(Math.round(470 * scale)),
+        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(Math.round(450 * scale)), key: 'text', color: 0xFFFFFF, text_size: px(fontSize), text_style: text_style.WRAP, line_space: px(Math.round(6 * scale)) }],
         text_view_count: 1
       },
       {
         type_id: 5,
-        item_height: px(690),
-        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(670), key: 'text', color: 0xFFFFFF, text_size: px(26), text_style: text_style.WRAP, line_space: px(6) }],
+        item_height: px(Math.round(690 * scale)),
+        text_view: [{ x: px(40), y: px(10), w: px(400), h: px(Math.round(670 * scale)), key: 'text', color: 0xFFFFFF, text_size: px(fontSize), text_style: text_style.WRAP, line_space: px(Math.round(6 * scale)) }],
         text_view_count: 1
       },
       {
@@ -175,7 +193,7 @@ Page({
     var data_type_config = []
     for (var d = 0; d < data_array.length; d++) {
       var len = data_array[d].text.length
-      var tid = getTypeId(len)
+      var tid = getTypeId(len, scale)
       data_type_config.push({ start: d, end: d, type_id: tid })
     }
 

@@ -107,6 +107,14 @@ Page({
       })
     }
 
+    // Botão de Ajustar Fonte no final da lista
+    data_array.push({
+      name: '⚙️ AJUSTAR FONTE',
+      chapters_text: '',
+      _bookId: -2,
+      _chapters: 0
+    })
+
     data_array.push({ name: '', chapters_text: '', _bookId: -1, _chapters: 0 })
 
     var item_config = [
@@ -126,13 +134,24 @@ Page({
         item_height: px(80),
         text_view: [],
         text_view_count: 0
+      },
+      {
+        type_id: 3,
+        item_height: px(90),
+        item_bg_color: 0x222222,
+        item_bg_radius: px(12),
+        text_view: [
+          { x: px(20), y: px(25), w: px(380), h: px(40), key: 'name', color: 0xFFD700, text_size: px(26), align_h: align.CENTER_H }
+        ],
+        text_view_count: 1
       }
     ]
 
     var total_items = data_array.length
     var data_type_config = [
       { start: 0, end: 0, type_id: 2 },
-      { start: 1, end: total_items - 2, type_id: 1 },
+      { start: 1, end: total_items - 3, type_id: 1 },
+      { start: total_items - 2, end: total_items - 2, type_id: 3 },
       { start: total_items - 1, end: total_items - 1, type_id: 2 }
     ]
 
@@ -152,6 +171,12 @@ Page({
         if (index === 0 || index === total_items - 1) return
 
         var selected = data_array[index]
+        if (selected._bookId === -2) {
+          console.log('Roteando para tela de configurações')
+          push({ url: 'page/settings' })
+          return
+        }
+
         console.log('Livro selecionado: ' + selected.name + ' ID:' + selected._bookId)
 
         appData.bookId = selected._bookId

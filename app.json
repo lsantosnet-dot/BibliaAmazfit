@@ -28,7 +28,8 @@
           "pages": [
             "page/index",
             "page/chapter",
-            "page/reader"
+            "page/reader",
+            "page/settings"
           ]
         }
       },
