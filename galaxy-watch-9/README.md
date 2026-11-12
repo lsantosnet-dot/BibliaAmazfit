@@ -60,3 +60,17 @@ Gere um Android App Bundle em Build > Generate Signed Bundle. É preciso uma con
 O código foi escrito mas **ainda não foi compilado nem testado em um relógio**, porque o ambiente onde foi criado não tem Android SDK.
 Na primeira abertura no Android Studio podem surgir pequenos ajustes de versão de dependências.
 O protótipo visual que serviu de referência mostra como cada tela deve ficar.
+
+## APK automático (GitHub Actions)
+
+O workflow `.github/workflows/galaxy-watch-apk.yml` compila o APK a cada push que altere `galaxy-watch-9/`:
+
+- **Download rápido:** aba **Actions** > execução mais recente > **Artifacts** > `MiniBiblia-GalaxyWatch9-apk`.
+- **Em Releases (Assets):** crie e envie uma tag que comece com `watch-v`:
+  ```bash
+  git tag watch-v1.0.0 && git push origin watch-v1.0.0
+  ```
+  O APK aparece em **Releases** > **Assets**.
+
+O APK é de *debug* (assinado com a chave de depuração), serve para instalar direto no relógio com `adb install`.
+Para a Google Play é preciso um bundle assinado com a sua chave de release.

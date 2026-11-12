@@ -1,0 +1,58 @@
+name: Galaxy Watch 9 - Build APK
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "galaxy-watch-9/**"
+      - ".github/workflows/galaxy-watch-apk.yml"
+    tags:
+      - "watch-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: galaxy-watch-9
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.10.2"
+
+      - name: Build APK (debug)
+        run: gradle :app:assembleDebug --no-daemon --stacktrace
+
+      - name: Nomear APK
+        id: apk
+        run: |
+          NAME="MiniBiblia-GalaxyWatch9-${GITHUB_REF_NAME//\//-}-${GITHUB_SHA::7}.apk"
+          cp app/build/outputs/apk/debug/app-debug.apk "$NAME"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+
+      # Download em: aba Actions > execução do workflow > Artifacts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MiniBiblia-GalaxyWatch9-apk
+          path: galaxy-watch-9/${{ steps.apk.outputs.name }}
+          if-no-files-found: error
+
+      # Download em: aba Releases > Assets (somente ao criar uma tag watch-v*)
+      - name: Publicar no Releases
+        if: startsWith(github.ref, 'refs/tags/watch-v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: MiniBíblia Galaxy Watch 9 ${{ github.ref_name }}
+          files: galaxy-watch-9/${{ steps.apk.outputs.name }}
+          generate_release_notes: true
