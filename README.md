@@ -1,5 +1,7 @@
 # MiniBíblia 📖✨ (Zepp OS 4)
 
+> **Galaxy Watch 9 (Wear OS):** a versão para o Samsung Galaxy Watch fica na pasta [`galaxy-watch-9/`](galaxy-watch-9/), em Kotlin + Jetpack Compose, usando os mesmos dados da Bíblia. O app Amazfit (Zepp OS) continua nesta raiz.
+
 O **MiniBíblia** é um mini-programa desenvolvido nativamente em **JavaScript** para o sistema operacional **Zepp OS 4**, otimizado para o relógio inteligente **Amazfit T-Rex 3** (resolução circular de 480x480).
 
 Este aplicativo foi projetado com foco em **extrema economia de memória RAM** e permite a leitura offline completa da Bíblia Sagrada na tradução **Almeida Corrigida Fiel (ACF)**, dispensando conexão com a internet ou smartphone durante o uso.
