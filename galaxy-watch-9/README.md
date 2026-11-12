@@ -13,11 +13,22 @@ Esta pasta é independente do app Amazfit, que continua na raiz do repositório 
 |---|---|---|
 | Livros | `ui/BooksScreen.kt` | "Continuar lendo", Antigo e Novo Testamento, ajuste de fonte |
 | Capítulos | `ui/ChaptersScreen.kt` | Grade de 3 colunas. Livros de 1 capítulo abrem direto no texto |
-| Leitor | `ui/ReaderScreen.kt` | Versículos em fonte serifada, números em dourado, botões de capítulo anterior e próximo |
+| Leitor | `ui/ReaderScreen.kt` | Versículos em fonte serifada, números em dourado, botão **Ouvir capítulo** no início, botões de capítulo anterior e próximo |
 | Fonte | `ui/SettingsScreen.kt` | 5 tamanhos com amostra ao vivo e "Manter tela ligada" |
 
 A luneta giratória rola as listas e deslizar para a direita (ou o botão Voltar do relógio) volta uma tela.
 O visual (preto AMOLED e dourado `#FFD700`) vem do protótipo aprovado e do app Amazfit.
+
+## Leitura em voz alta
+
+No início de cada capítulo há o botão **Ouvir capítulo** (dourado, com ícone de play).
+Ele fala o título e depois os versículos em sequência, destaca o versículo atual e rola a tela até ele.
+Toque em **Pausar** para parar e em **Continuar** para retomar do mesmo versículo. Trocar de capítulo ou voltar à lista para a leitura.
+Usa o motor de voz do relógio (`TextToSpeech`, `data/SpeechController.kt`), offline, em português do Brasil.
+O som sai pelo alto-falante do relógio ou por fones Bluetooth conectados.
+
+- Se o relógio não tiver voz em português instalada, o botão mostra "Sem voz em português". Instale a voz em Configurações > Geral > Saída de texto para voz.
+- Com a leitura ativa a tela fica ligada. Se a tela apagar ou você sair do app, a leitura para (ainda não há serviço em segundo plano).
 
 ## Estrutura
 
@@ -34,6 +45,7 @@ galaxy-watch-9/
             ├── MainActivity.kt        navegação entre as telas
             ├── data/BibleRepository.kt  leitura dos JSON (um livro por vez)
             ├── data/Prefs.kt            fonte, tela ligada, último capítulo
+            ├── data/SpeechController.kt leitura em voz alta (TextToSpeech)
             └── ui/                      telas e tema
 ```
 
